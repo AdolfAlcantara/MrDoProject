@@ -4,6 +4,8 @@ Little replication of one level of MrDo arcade version
 Mr. Do es el pequeño personaje con apariencia de payaso cuyo objetivo es realizar la mayor cantidad de puntos haciendo tuneles
 en el nivel recogiendo las cerezas que estan distribuidas en todo este mientras huye de los pequeños dinosaurios que lo persiguen.
 
+![alt text](https://files.retrogames.cc/previews/mrdo.png)
+
 Para comodidad y facilidad de desarrollo del proyecto todas las animaciones fueron omitidas, y se limito a la creacion de un nivel, 
 no obstante el juego se programo de forma escalable.
 

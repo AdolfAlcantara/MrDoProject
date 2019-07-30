@@ -29,6 +29,7 @@ typedef struct wall
 }wall;
 
 //enemies 2
+uint8_t cherryNumber;
 clown player;
 dino dinos[3];
 wall walls[13][12] = {false,false};
@@ -89,6 +90,8 @@ void initLevel()
 
 void initCherries()
 {
+    cherryNumber = 40;
+
     for(int x=0;x<2;x++){
         for(int y = 1; y<5;y++){
             walls[y][x].hasCherry = true;
@@ -137,15 +140,6 @@ void initCharacters()
         }
     }
     
-}
-
-void initLevelOne(){
-    initLevel();
-    initCherries();
-    initCharacters();
-    draw_level();
-    draw_gui();
-    draw_clown();
 }
 
 void move_clow(uint8_t dir)
@@ -409,7 +403,44 @@ void draw_level()
 
 void draw_gui()
 {
-    uint8_t pos_x =48,pos_y=16;
+
+    uint8_t pos_y  = 5;
+    uint8_t pos_x = 50;
+    set_color(YELLOW,BLACK);
+    for(uint8_t i=0;i<25;i++){
+        set_cursor(pos_y,pos_x++);
+        put_char(220);
+    }
+    pos_x--;
+    pos_y++;
+    for(uint8_t i=0;i<3;i++){
+        set_cursor(pos_y++,pos_x);
+        put_char(219);
+    }
+    pos_y--;
+    pos_x--;
+    for(uint8_t i=0;i< 23;i++){
+        set_cursor(pos_y,pos_x--);
+        put_char(220);
+    }
+    for(uint8_t i=0;i< 3;i++){
+        set_cursor(pos_y--,pos_x);
+        put_char(219);
+    }
+
+    set_cursor(7,59);
+    set_color(BRIGHT_WHITE,BLACK);
+    puts("MR. DO!");
+
+
+    // pos_y =6;
+    // pos_x=50;
+    // for(uint8_t i=0;i< 3;i++){
+    //     set_cursor(pos_y++,pos_x);
+    //     put_char(219);
+    // }
+
+    pos_x =48,pos_y=16;
     uint8_t pieces=1;
     set_color(MAGENTA,BLACK);
     for(uint8_t i=0;i<4;i++){
@@ -432,6 +463,7 @@ void draw_gui()
     char lives = TO_STR(player.lives);
     set_cursor(pos_y,pos_x++);
     put_char(lives);
+
 }
 
 void check_collision()
@@ -448,7 +480,50 @@ void check_collision()
     put_char(y);
     if(walls[pos_y][pos_x].exists){
         walls[pos_y][pos_x].exists = false;
+        if(walls[pos_y][pos_x].hasCherry){
+            cherryNumber--;
+        }
     }
+}
+
+bool respawn(uint8_t* dino_number, uint8_t* dino_spawn_time)
+{
+    if(player.lives==0){
+        return true;
+    }else{
+        delay_ms(100);
+        *dino_number = 0;
+        *dino_spawn_time = 10;
+        player.pos_x=20;
+        player.pos_y=28;
+        for(uint8_t i=0;i<3;i++){
+            dinos[i].isVisible = false;                                                                                                                                                                                                                                                                                                                                          
+            dinos[i].isDead = false;
+            dinos[i].pos_x = 20;
+            dinos[i].pos_y = 18;
+            dinos[i].isTrapped=false;
+            for(int j=0;j<4;j++){
+                dinos[i].trappedWays[j]=false;
+            }
+        }
+        return false;
+    }
+}
+
+bool check_loose()
+{
+    for(uint8_t i=0;i<3;i++){
+        if(dinos[i].pos_x == player.pos_x && dinos[i].pos_y == player.pos_y){
+            player.lives--;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool check_win()
+{
+    return cherryNumber == 0;
 }
 
 void dino_spawn(uint8_t *dino, uint8_t *time){
@@ -461,4 +536,29 @@ void dino_spawn(uint8_t *dino, uint8_t *time){
     }else{
         *time = *time -1;
     }
+}
+
+void initLevelOne(){
+    initLevel();
+    initCherries();
+    initCharacters();
+    draw_level();
+    draw_gui();
+    draw_clown();
+}
+
+void draw_everything()
+{
+    draw_level();
+    draw_gui();
+    draw_clown();
+    draw_dinos();
+}
+
+void draw_win_scenario(){
+    set_cursor(18,16);
+    set_color(WHITE,BLACK);
+    check_win()? puts("YOU     WIN"):puts("YOU     LOSE");
+    set_cursor(19,13);
+    puts("PRESS R TO RESTART");
 }

@@ -16,10 +16,15 @@ int main() {
             check_collision();
         }
         move_dinos();
-        draw_level();
-        draw_gui();
-        draw_clown();
-        draw_dinos();
+        draw_everything();
+        if(check_win()){
+            break;
+        }
+        if(check_loose()){
+            if(respawn(&dino_number,&dino_spawn_time)){
+                break;
+            }
+        }
         set_color(WHITE, BLACK);
         set_cursor(1,1);
         put_char(TO_STR(dir));
@@ -28,7 +33,11 @@ int main() {
         dino_spawn(&dino_number,&dino_spawn_time);
         delay_ms(100);
         clear_screen();
+    }
 
+    while(1){
+        draw_everything();
+        draw_win_scenario();
     }
 
     return 0;

@@ -2,9 +2,10 @@
 #include "keypad.c"
 #include "game.c"
 
-
+extern void move_clown(uint8_t dir);
 
 int main() {
+
     clear_screen();
     initLevelOne();
     uint8_t dir, dino_number=0, dino_spawn_time=10;
@@ -12,7 +13,7 @@ int main() {
         
         dir = keypad_getkey();
         if(dir!=0){
-            move_clow(dir);
+            move_clown(dir);
             check_collision();
         }
         move_dinos();

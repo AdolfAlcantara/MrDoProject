@@ -3,6 +3,7 @@
 
 #define TO_STR(ch) ( ( ((ch) >= 0 ) && ((ch) <= 9) )? (48 + (ch)) : ('a' + ((ch) - 10)) )
 
+extern void initLevel();
 
 typedef struct clown
 {
@@ -34,59 +35,161 @@ clown player;
 dino dinos[3];
 wall walls[13][12] = {false,false};
 
-void initLevel()
-{
+// void initLevel()
+// {
     
-    for(int y=0;y<13;y++){
-        if(y==0){
-            for(int x=0;x<=3;x++){
-                walls[y][x].exists=true;
-            }
-            walls[0][10].exists=true;
-            walls[0][11].exists=true;
+//     for(int y=0;y<13;y++){
 
-        }
+//         switch(y){
+//             case(0):{
+//                 for(int x=0;x<=3;x++){
+//                     walls[0][x].exists=true;
+//                 }
+//                 walls[0][10].exists=true;
+//                 walls[0][11].exists=true;
+//                 break;
+
+//             }
+//             case(1):{
+//                 for(int x=0;x<=8;x++){
+//                 if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 walls[y][11].exists=true;
+//                 break;
+//             }
+//             case(2):{
+//                 for(int x=0;x<=9;x++){
+//                 if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(3):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(4):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(5):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(6):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(7):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(8):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(9):{
+//                 for(int x=0;x<=10;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(10):{
+//                  for(int x=3;x<=9;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 break;
+//             }
+//             case(11):{
+//                 walls[y][1].exists=true;
+//                 for(int x=3;x<=8;x++){
+//                     if(x==5) x++;
+//                     walls[y][x].exists=true;
+//                 }
+//                 walls[y][11].exists=true;
+//                 break;
+//             }
+//             case(12):{
+//                 walls[y][10].exists=true;
+//                 walls[y][11].exists=true;
+//                 break;
+            // }
+//             default:{
+//                 break;
+//             }
+//         }
+//     }
+// }
+    //     if(y==0){
+    //         for(int x=0;x<=3;x++){
+    //             walls[y][x].exists=true;
+    //         }
+    //         walls[0][10].exists=true;
+    //         walls[0][11].exists=true;
+
+    //     }
        
-        if(y==1){
-            for(int x=0;x<=8;x++){
-                if(x==5) x++;
-                walls[y][x].exists=true;
-            }
-            walls[y][11].exists=true;
-        }
-        if(y==2){
-           for(int x=0;x<=9;x++){
-                if(x==5) x++;
-                walls[y][x].exists=true;
-            }
-        }
-        if(y==3||y==4||y==5||y==6||y==7||y==8||y==9){
-           for(int x=0;x<=10;x++){
-                if(x==5) x++;
-                walls[y][x].exists=true;
-            }
-        }
-        if(y==10){
-             for(int x=3;x<=9;x++){
-                if(x==5) x++;
-                walls[y][x].exists=true;
-            }
-        }
-        if(y==11){
-            walls[y][1].exists=true;
-            for(int x=3;x<=8;x++){
-                if(x==5) x++;
-                walls[y][x].exists=true;
-            }
-            walls[y][11].exists=true;
-        }
-        if(y==12){
-            walls[y][10].exists=true;
-            walls[y][11].exists=true;
-        }
-    }
+    //     if(y==1){
+    //         for(int x=0;x<=8;x++){
+    //             if(x==5) x++;
+    //             walls[y][x].exists=true;
+    //         }
+    //         walls[y][11].exists=true;
+    //     }
+    //     if(y==2){
+    //        for(int x=0;x<=9;x++){
+    //             if(x==5) x++;
+    //             walls[y][x].exists=true;
+    //         }
+    //     }
+    //     if(y==3||y==4||y==5||y==6||y==7||y==8||y==9){
+    //        for(int x=0;x<=10;x++){
+    //             if(x==5) x++;
+    //             walls[y][x].exists=true;
+    //         }
+    //     }
+    //     if(y==10){
+    //          for(int x=3;x<=9;x++){
+    //             if(x==5) x++;
+    //             walls[y][x].exists=true;
+    //         }
+    //     }
+    //     if(y==11){
+    //         walls[y][1].exists=true;
+    //         for(int x=3;x<=8;x++){
+    //             if(x==5) x++;
+    //             walls[y][x].exists=true;
+    //         }
+    //         walls[y][11].exists=true;
+    //     }
+    //     if(y==12){
+    //         walls[y][10].exists=true;
+    //         walls[y][11].exists=true;
+    //     }
+    // }
 
-}
+// }
 
 void initCherries()
 {
@@ -142,38 +245,38 @@ void initCharacters()
     
 }
 
-void move_clow(uint8_t dir)
-{
-     switch(dir){
-            case(1):{
-                if(player.pos_x>=4){
-                    player.pos_x-=4;
-                }
-                break;
-            }
-            case(2):{
-                if(player.pos_x<=40){
-                    player.pos_x+=4;
-                }
-                break;
-            }
-            case(4):{
-                if(player.pos_y<=26){
-                    player.pos_y+=2;
-                }
-                break;
-            }
-            case(8):{
-                if(player.pos_y>=6){
-                    player.pos_y-=2;
-                }
-                break;
-            }
-            default:{
-                break;
-            }
-        }
-}
+// void move_clow(uint8_t dir)
+// {
+//      switch(dir){
+//             case(1):{
+//                 if(player.pos_x>=4){
+//                     player.pos_x-=4;
+//                 }
+//                 break;
+//             }
+//             case(2):{
+//                 if(player.pos_x<=40){
+//                     player.pos_x+=4;
+//                 }
+//                 break;
+//             }
+//             case(4):{
+//                 if(player.pos_y<=26){
+//                     player.pos_y+=2;
+//                 }
+//                 break;
+//             }
+//             case(8):{
+//                 if(player.pos_y>=6){
+//                     player.pos_y-=2;
+//                 }
+//                 break;
+//             }
+//             default:{
+//                 break;
+//             }
+//         }
+// }
 
 bool calculate_dino_move(uint8_t pos_y, uint8_t pos_x)
 {
